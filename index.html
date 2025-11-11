@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineStar Cinema</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(20, 20, 20, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ffd700;
+        }
+        
+        h1 {
+            color: #ffd700;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        h2 {
+            color: #ffd700;
+            margin: 25px 0 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #333;
+        }
+        
+        h3 {
+            color: #ffd700;
+            margin: 20px 0 10px;
+        }
+        
+        .tagline {
+            font-style: italic;
+            color: #ccc;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .poster {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .poster img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+        
+        .poster img:hover {
+            transform: scale(1.03);
+        }
+        
+        .info {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .video-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .movie-video {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .showtimes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0;
+        }
+        
+        .showtime {
+            background: #222;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .showtime:hover {
+            background: #ffd700;
+            color: #000;
+        }
+        
+        .cast-list, .details-list {
+            list-style-type: none;
+            margin-left: 20px;
+        }
+        
+        .cast-list li, .details-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #222;
+        }
+        
+        .cast-list li:before {
+            content: "•";
+            color: #ffd700;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid #333;
+            color: #777;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .poster {
+                order: -1;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* New Styles for Assignment Requirements */
+        .navbar-brand {
+            color: #ffd700 !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            color: white !important;
+        }
+        
+        .nav-link:hover {
+            color: #ffd700 !important;
+        }
+        
+        .carousel-item img {
+            height: 400px;
+            object-fit: cover;
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-control:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 0 0.25rem rgba(255, 215, 0, 0.25);
+        }
+        
+        /* NEW ENHANCEMENTS */
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ffd700;
+            color: #000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+        }
+        
+        /* Enhanced Contact Form */
+        .contact-info {
+            background: rgba(40, 40, 40, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info i {
+            color: #ffd700;
+            margin-right: 10px;
+        }
+        
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1055;
+        }
+        
+        .toast {
+            background: rgba(40, 40, 40, 0.95);
+            color: white;
+            border-left: 4px solid #ffd700;
+        }
+        
+        /* Enhanced Footer */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            color: #ffd700;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            transform: scale(1.2);
+        }
+        
+        /* Movie Rating Stars */
+        .rating {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        
+        /* Booking Button */
+        .booking-btn {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .booking-btn:hover {
+            background: #ffed4a;
+            transform: scale(1.05);
+        }
+        
+        /* Theater Info Section */
+        .theater-info {
+            background: rgba(40, 40, 40, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .theater-info h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        
+        .amenity {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .amenity i {
+            color: #ffd700;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-camera-reels me-2"></i>CineStar
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#theater-info">Theater Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Carousel -->
+    <div id="heroCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="image/image3.jpg" class="d-block w-100" alt="Cinema Experience">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>Experience Movies Like Never Before</h2>
+                    <p>State-of-the-art theaters with immersive sound and picture quality.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1595769816263-9b910be24d5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" class="d-block w-100" alt="Movie Night">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>Special Offers Every Week</h2>
+                    <p>Check out our discounted tickets and combo deals.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1535016120720-40c646be5580?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" class="d-block w-100" alt="Comfortable Seating">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>Comfortable Seating</h2>
+                    <p>Relax in our premium recliner seats with extra legroom.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>CINESTAR CINEMA</h1>
+            <p class="tagline">Your Premier Movie Experience</p>
+        </header>
+
+        <!-- Original Bad Boys Content Only -->
+        <div class="content" data-aos="fade-up">
+            <div class="poster">
+                <img src="image/Image2.jpg" alt="Bad Boys Poster" class="poster">
+                <div class="rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                    <span class="ms-2">4.5/5</span>
+                </div>
+                <button class="booking-btn">Book Tickets Now</button>
+            </div>
+            
+            <div class="info">
+                <h2>BAD BOYS FOR LIFE</h2>
+                <p class="tagline">Ride together. Die together.</p>
+                <p>The wife and son of a Mexican drug lord embark on a vengeful quest to kill all those involved in his trial and imprisonment – including Miami Detective Mike Lowrey. When Mike gets wounded, he teams up with partner Marcus Burnett and AMMO – a special tactical squad – to bring the culprits to justice.</p>
+                
+                <h3>RELEASE DATE</h3>
+                <p>January 17, 2020</p>
+                
+                <h3>SHOW TIMES</h3>
+                <div class="showtimes">
+                    <div class="showtime">1:30 PM</div>
+                    <div class="showtime">4:00 PM</div>
+                    <div class="showtime">7:30 PM</div>
+                    <div class="showtime">10:00 PM</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="video-container" data-aos="fade-up">
+            <h2>MOVIE TRAILER</h2>
+            <video class="movie-video" controls poster="image/Image2.jpg">
+                <source src="video/BadBoy.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+        <div class="content" data-aos="fade-up">
+            <div class="info">
+                <h2>CAST</h2>
+                <ul class="cast-list">
+                    <li>Will Smith as Detective Mike Lowrey</li>
+                    <li>Martin Lawrence as Detective Marcus Burnett</li>
+                    <li>Vanessa Hudgens as Kelly</li>
+                    <li>Alexander Ludwig as Dorn</li>
+                    <li>Charles Melton as Rafe</li>
+                    <li>Paola Núñez as Rita</li>
+                </ul>
+            </div>
+            
+            <div class="info">
+                <h2>ADDITIONAL INFORMATION</h2>
+                <ul class="details-list">
+                    <li><strong>Directors:</strong> Adil El Arbi, Bilall Fallah</li>
+                    <li><strong>Runtime:</strong> 2h 4m</li>
+                    <li><strong>Rating:</strong> R</li>
+                    <li><strong>Genre:</strong> Action, Comedy, Crime</li>
+                    <li><strong>Budget:</strong> $90 million</li>
+                    <li><strong>Box Office:</strong> $426.5 million</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Theater Info Section -->
+        <div class="theater-info" id="theater-info" data-aos="fade-up">
+            <h3>THEATER AMENITIES</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="amenity">
+                        <i class="bi bi-cup-straw fs-4"></i>
+                        <div>
+                            <h5>Food & Beverages</h5>
+                            <p>Enjoy our wide selection of snacks, drinks, and gourmet options</p>
+                        </div>
+                    </div>
+                    <div class="amenity">
+                        <i class="bi bi-soundwave fs-4"></i>
+                        <div>
+                            <h5>Dolby Atmos Sound</h5>
+                            <p>Immersive audio experience with our state-of-the-art sound system</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="amenity">
+                        <i class="bi bi-arrow-through-heart fs-4"></i>
+                        <div>
+                            <h5>Comfortable Seating</h5>
+                            <p>Recliner seats with extra legroom for maximum comfort</p>
+                        </div>
+                    </div>
+                    <div class="amenity">
+                        <i class="bi bi-ticket-perforated fs-4"></i>
+                        <div>
+                            <h5>Online Booking</h5>
+                            <p>Reserve your seats in advance with our easy online system</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 CineStar Cinema | Created by Beneface Majang</p>
+            <div class="social-links">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-twitter"></i></a>
+                <a href="#"><i class="bi bi-instagram"></i></a>
+                <a href="#"><i class="bi bi-youtube"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Contact Us Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title">Contact Us</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="contact-info mb-4">
+                        <h5>Get in Touch</h5>
+                        <p>Have questions about our movies, showtimes, or services? We'd love to hear from you!</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><i class="bi bi-geo-alt"></i> 123 Cinema Street, Movie City</p>
+                                <p><i class="bi bi-telephone"></i> (555) 123-MOVIE</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><i class="bi bi-envelope"></i> info@cinestarcinema.com</p>
+                                <p><i class="bi bi-clock"></i> Mon-Sun: 10:00 AM - 11:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form id="contactForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Your full name">
+                                    <div class="error-message" id="nameError">Please enter your name</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Your email address">
+                                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <select class="form-select" id="subject">
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="tickets">Ticket Issues</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="complaint">Complaint</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div class="error-message" id="subjectError">Please select a subject</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="4" placeholder="Your message"></textarea>
+                            <div class="error-message" id="messageError">Please enter your message</div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="consentCheck">
+                            <label class="form-check-label" for="consentCheck">
+                                I consent to the collection and use of my personal information as described in the Privacy Policy
+                            </label>
+                            <div class="error-message" id="consentError">You must provide consent to submit this form</div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-warning">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="bi bi-arrow-up"></i>
+    </a>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Form validation function
+        function validateForm() {
+            let isValid = true;
+            
+            // Reset error messages
+            $('.error-message').hide();
+            $('.form-control, .form-select').removeClass('is-invalid');
+            
+            // Validate name
+            const name = $('#name').val().trim();
+            if (name === '') {
+                $('#nameError').show();
+                $('#name').addClass('is-invalid');
+                isValid = false;
+            }
+            
+            // Validate email
+            const email = $('#email').val().trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                $('#emailError').show();
+                $('#email').addClass('is-invalid');
+                isValid = false;
+            }
+            
+            // Validate subject
+            const subject = $('#subject').val();
+            if (subject === '') {
+                $('#subjectError').show();
+                $('#subject').addClass('is-invalid');
+                isValid = false;
+            }
+            
+            // Validate message
+            const message = $('#message').val().trim();
+            if (message === '') {
+                $('#messageError').show();
+                $('#message').addClass('is-invalid');
+                isValid = false;
+            }
+            
+            // Validate consent checkbox
+            if (!$('#consentCheck').is(':checked')) {
+                $('#consentError').show();
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = $(`
+                <div class="toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0" role="alert">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            `);
+            
+            $('.toast-container').append(toast);
+            const bsToast = new bootstrap.Toast(toast[0]);
+            bsToast.show();
+            
+            // Remove toast from DOM after it's hidden
+            toast.on('hidden.bs.toast', function() {
+                $(this).remove();
+            });
+        }
+
+        // Initialize when document is ready
+        $(document).ready(function() {
+            // Form submission handler
+            $('#contactForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                if (validateForm()) {
+                    // Form is valid
+                    showToast('Thank you for your message! We will get back to you soon.', 'success');
+                    $('#contactModal').modal('hide');
+                    $('#contactForm')[0].reset();
+                } else {
+                    showToast('Please fill in all required fields correctly.', 'danger');
+                }
+            });
+
+            // Back to top button
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100) {
+                    $('.back-to-top').addClass('show');
+                } else {
+                    $('.back-to-top').removeClass('show');
+                }
+            });
+            
+            $('.back-to-top').click(function(e) {
+                e.preventDefault();
+                $('html, body').animate({scrollTop: 0}, 300);
+            });
+
+            // Booking button functionality
+            $('.booking-btn').click(function() {
+                showToast('Redirecting to booking page...', 'success');
+                // In a real application, this would redirect to a booking page
+                // window.location.href = 'booking.html';
+            });
+
+            // Showtime selection
+            $('.showtime').click(function() {
+                $('.showtime').removeClass('active');
+                $(this).addClass('active');
+                showToast('Showtime selected! Click "Book Tickets" to proceed.', 'success');
+            });
+        });
+    </script>
+</body>
+</html>
